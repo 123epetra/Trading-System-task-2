@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+}
+
+#order-form {
+    margin-top: 20px;
+}
+
+#order-form input {
+    margin: 10px 0;
+}
+
+#order-form button {
+    display: block;
+    margin-top: 10px;
+}

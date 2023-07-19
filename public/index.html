@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Trading System</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Simple Trading System</h1>
+    </header>
+    <main>
+        <div id="last-trades">
+            <h2>Last Trades</h2>
+            <p id="last-bought">Last Bought: </p>
+            <p id="last-sold">Last Sold: </p>
+        </div>
+        <form id="order-form">
+            <input type="text" id="username" placeholder="Username">
+            <input type="text" id="side" placeholder="Buy or Sell">
+            <input type="number" id="quantity" placeholder="Quantity">
+            <input type="number" id="price" placeholder="Price">
+            <button type="submit">Submit Order</button>
+        </form>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
