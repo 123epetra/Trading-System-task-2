@@ -12,14 +12,25 @@
     <main>
         <div id="last-trades">
             <h2>Last Trades</h2>
+            <p id="username"></p>
             <p id="last-bought">Last Bought: </p>
             <p id="last-sold">Last Sold: </p>
+            <p id="amountb">Balance: </p>
+            <p id="error"> </p>
         </div>
         <form id="order-form">
-            <input type="text" id="username" placeholder="Username">
-            <input type="text" id="side" placeholder="Buy or Sell">
-            <input type="number" id="quantity" placeholder="Quantity">
+            <select id="side"> <!-- Change this line -->
+                <option value="buy">Buy</option>
+                <option value="sell">Sell</option>
+            </select>
+            <input type="number" id="quantity" placeholder="Quantity = 100" value="100" readonly>
             <input type="number" id="price" placeholder="Price">
+            <button type="submit">Submit Order</button>
+        </form>
+        <form id="amount-form">
+            <input type="number" id="accountnumber" placeholder="Account Number">
+            <input type="number" id="accountpin" placeholder="Account Pin">
+            <input type="number" id="amount" placeholder="amount">
             <button type="submit">Submit Order</button>
         </form>
     </main>

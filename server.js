@@ -3,24 +3,37 @@ const http = require('http');
 const socketIo = require('socket.io');
 
 const app = express();
-app.use(express.static('public'));
+app.use(express.static('public', { index: 'login.html' }));
+
+
 const server = http.createServer(app);
 const io = socketIo(server);
 
 let lastBought = null;
 let lastSold = null;
-
+let amount = null;
 io.on('connection', (socket) => {
-    socket.emit('update', { lastBought, lastSold });
+    socket.emit('update', { lastBought, lastSold, amount });
 
     socket.on('newOrder', (order) => {
-        if (order.side.toLowerCase() === 'buy') {
-            lastBought = order.price;
-        } else if (order.side.toLowerCase() === 'sell') {
+        if (order.side && order.side.toLowerCase() === 'buy') {
+            if (amount >= order.price * order.quantity) {
+                lastBought = order.price;
+                amount -= order.price * order.quantity;
+            } else {
+                socket.emit('error', { message: 'Insufficient amount' });
+            }
+        } else if (order.side && order.side.toLowerCase() === 'sell') {
             lastSold = order.price;
+            amount += order.price * order.quantity;
         }
 
-        io.emit('update', { lastBought, lastSold });
+        socket.emit('update', { lastBought, lastSold, amount });
+    });
+
+    socket.on('newAmount', (data) => {
+        amount += Number(data.amount);
+        socket.emit('update', { lastBought, lastSold, amount });
     });
 });
 
