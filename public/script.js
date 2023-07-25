@@ -14,6 +14,14 @@ socket.on('updateAmount', (data) => {
 socket.on('error', (data) => {
     // Handle the error here
     document.getElementById('error').textContent = 'Error : Insufficient amount ';
+
+
+});
+socket.on('errorSold', (data) => {
+    // Handle the error here
+    document.getElementById('error').textContent = 'Stock is not available at your price';
+
+
 });
 
 
