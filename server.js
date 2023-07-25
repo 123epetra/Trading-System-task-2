@@ -18,12 +18,16 @@ io.on('connection', (socket) => {
     
     socket.on('newOrder', (order) => {
         if (order.side && order.side.toLowerCase() === 'buy') {
+            if (order.price>=lastSold){
             if (amounts[socket.id] >= order.price * order.quantity) {
                 lastBought = order.price;
                 amounts[socket.id] -= order.price * order.quantity;
             } else {
                 socket.emit('error', { message: 'Insufficient amount' });
-            }
+            }}
+        else{
+            socket.emit('errorSold', { message: 'Stock is not available at your price' });
+        }
         } else if (order.side && order.side.toLowerCase() === 'sell') {
             lastSold = order.price;
             amounts[socket.id] += order.price * order.quantity;
