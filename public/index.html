@@ -6,34 +6,58 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+    
+<div style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;">
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <source src="video.mp4" type="video/mp4">
+    </video>
+</div>
     <header>
-        <h1>Simple Trading System</h1>
+        <h1 class="title">Simple Trading System</h1>
     </header>
     <main>
-        <div id="last-trades">
-            <h2>Last Trades</h2>
-            <p id="username"></p>
-            <p id="last-bought">Last Bought: </p>
-            <p id="last-sold">Last Sold: </p>
-            <p id="amountb">Balance: </p>
-            <p id="error"> </p>
+        <div class="contents">
+            <div class="load_amount">
+                <form id="amount-form" class="amount">
+                    <p class="load_money" data-tilt data-tilt-glare data-tilt-max-glare="0.8">Load Some Money</p>
+                    <input type="number" id="accountnumber" placeholder="Account Number" >
+                    <input type="number" id="accountpin" placeholder="Account Pin">
+                    <input type="number" id="amount" placeholder="amount">
+                    <button type="submit" class="button">Submit Order</button>
+                </form>
+
+            </div>
+            <div id="last-trades" class="display_values " data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+                <p id="username"></p>
+                
+                <h2>Last Trades</h2>
+               
+                <p id="last-bought">Last Bought: </p>
+                <p id="last-sold">Last Sold: </p>
+                <p id="amountb">Balance: </p>
+                <p id="error"> </p>
+            </div>
+            
+            <div class="trade">
+                <form id="order-form" class="order ">
+                    <p class="load_money" data-tilt data-tilt-glare data-tilt-max-glare="0.8">Buy Stocks</p>
+
+                    <select id="side" class="section"> <!-- Change this line -->
+                        <option value="buy" class="section">Buy</option>
+                        <option value="sell" class="section">Sell</option>
+                    </select>
+                    <input type="number" id="quantity" placeholder="Quantity = 100" value="100" readonly>
+                    <input type="number" id="price" placeholder="Price">
+                    <button type="submit">Submit Order</button>
+                </form>
+            </div>
+            
+            
+            
         </div>
-        <form id="order-form">
-            <select id="side"> <!-- Change this line -->
-                <option value="buy">Buy</option>
-                <option value="sell">Sell</option>
-            </select>
-            <input type="number" id="quantity" placeholder="Quantity = 100" value="100" readonly>
-            <input type="number" id="price" placeholder="Price">
-            <button type="submit">Submit Order</button>
-        </form>
-        <form id="amount-form">
-            <input type="number" id="accountnumber" placeholder="Account Number">
-            <input type="number" id="accountpin" placeholder="Account Pin">
-            <input type="number" id="amount" placeholder="amount">
-            <button type="submit">Submit Order</button>
-        </form>
+ 
     </main>
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 </body>
 </html>

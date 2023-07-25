@@ -4,9 +4,12 @@ document.getElementById('username').textContent = 'Username: ' + username;
 socket.on('update', (data) => {
     document.getElementById('last-bought').textContent = 'Last Bought: ' + data.lastBought;
     document.getElementById('last-sold').textContent = 'Last Sold: ' + data.lastSold;
-    document.getElementById('amountb').textContent = 'Balance: ' + data.amount;
+   
     
 
+});
+socket.on('updateAmount', (data) => {
+    document.getElementById('amountb').textContent = 'Balance: ' + data.amount;
 });
 socket.on('error', (data) => {
     // Handle the error here

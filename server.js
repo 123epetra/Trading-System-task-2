@@ -11,30 +11,39 @@ const io = socketIo(server);
 
 let lastBought = null;
 let lastSold = null;
-let amount = null;
+let amounts = {};
 io.on('connection', (socket) => {
-    socket.emit('update', { lastBought, lastSold, amount });
-
+    amounts[socket.id] = 0;
+    socket.emit('update', { lastBought, lastSold, amount: amounts[socket.id] });
+    
     socket.on('newOrder', (order) => {
         if (order.side && order.side.toLowerCase() === 'buy') {
-            if (amount >= order.price * order.quantity) {
+            if (amounts[socket.id] >= order.price * order.quantity) {
                 lastBought = order.price;
-                amount -= order.price * order.quantity;
+                amounts[socket.id] -= order.price * order.quantity;
             } else {
                 socket.emit('error', { message: 'Insufficient amount' });
             }
         } else if (order.side && order.side.toLowerCase() === 'sell') {
             lastSold = order.price;
-            amount += order.price * order.quantity;
+            amounts[socket.id] += order.price * order.quantity;
         }
 
-        socket.emit('update', { lastBought, lastSold, amount });
+        
+        io.emit('update', { lastBought, lastSold });
+        socket.emit('updateAmount', { amount: amounts[socket.id] });
     });
 
     socket.on('newAmount', (data) => {
-        amount += Number(data.amount);
-        socket.emit('update', { lastBought, lastSold, amount });
+        amounts[socket.id] += Number(data.amount);
+        
+        io.emit('update', { lastBought, lastSold });
+        socket.emit('updateAmount', { amount: amounts[socket.id] });
+    });
+    socket.on('disconnect', () => {
+        delete amounts[socket.id]; 
     });
 });
+
 
 server.listen(3000, () => console.log('Server listening on port 3000'));
